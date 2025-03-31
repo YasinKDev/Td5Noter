@@ -1,7 +1,12 @@
 const express = require('express');
+const cors = require('cors'); // Ajout du module CORS
 const app = express();
 const port = 3000;
 
+// Active CORS pour toutes les routes
+app.use(cors());
+
+// Pour parser les requêtes en JSON
 app.use(express.json());
 
 let questionnaires = [];
@@ -45,7 +50,9 @@ app.delete('/api/questionnaires/:id', (req, res) => {
 app.post('/api/questionnaires/:id/questions', (req, res) => {
   const questionnaireId = parseInt(req.params.id);
   const questionnaire = questionnaires.find(q => q.id === questionnaireId);
-  if (!questionnaire) return res.status(404).json({ error: 'Questionnaire non trouvé' });
+  if (!questionnaire) {
+    return res.status(404).json({ error: 'Questionnaire non trouvé' });
+  }
   const { text } = req.body;
   const question = { id: nextQuestionId++, text };
   questionnaire.questions.push(question);

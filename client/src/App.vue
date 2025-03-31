@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     fetchQuestionnaires() {
-      fetch('/api/questionnaires')
+      fetch('http://localhost:3000/api/questionnaires')
         .then(res => res.json())
         .then(data => (this.questionnaires = data))
         .catch(err => console.error(err))
@@ -45,7 +45,7 @@ export default {
     addQuestionnaire() {
       const title = this.newQuestionnaireTitle.trim()
       if (!title) return
-      fetch('/api/questionnaires', {
+      fetch('http://localhost:3000/api/questionnaires', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title })
@@ -57,12 +57,12 @@ export default {
         .catch(err => console.error(err))
     },
     removeQuestionnaire(id) {
-      fetch(`/api/questionnaires/${id}`, { method: 'DELETE' })
+      fetch(`http://localhost:3000/api/questionnaires/${id}`, { method: 'DELETE' })
         .then(() => this.fetchQuestionnaires())
         .catch(err => console.error(err))
     },
     updateQuestionnaire(updated) {
-      fetch(`/api/questionnaires/${updated.id}`, {
+      fetch(`http://localhost:3000/api/questionnaires/${updated.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: updated.title })
